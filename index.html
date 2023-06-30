@@ -49,42 +49,26 @@
 
 <body>
     <div id="canvasZone"><canvas id="renderCanvas"></canvas></div>
-    <script src="marble-towers/marble-towers-scene.js"></script>
+    <script src="marble-towers/marble-towers-create-scene.js"></script>
     <script>
         var canvas = document.getElementById("renderCanvas");
 
         var startRenderLoop = function (engine, canvas) {
             engine.runRenderLoop(function () {
-                if (sceneToRender && sceneToRender.activeCamera) {
-                    sceneToRender.render();
+                if (scene && scene.activeCamera) {
+                    scene.render();
                 }
             });
         }
 
-        var engine = null;
-        var scene = null;
-        var sceneToRender = null;
-        var createDefaultEngine = function () { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true }); };
-
-        window.initFunction = async function () {
-            var asyncEngineCreation = async function () {
-                try {
-                    return createDefaultEngine();
-                } catch (e) {
-                    console.log("the available createEngine function failed. Creating the default engine instead");
-                    return createDefaultEngine();
-                }
-            }
-
+        window.initMarbleTowersScene = async function () {
             await Ammo();
-            window.engine = await asyncEngineCreation();
+            window.engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
             if (!engine) throw 'engine should not be null.';
             startRenderLoop(engine, canvas);
             window.scene = createScene(engine);
         };
-        initFunction().then(() => {
-            sceneToRender = scene
-        });
+        initMarbleTowersScene();
 
         // Resize
         window.addEventListener("resize", function () {
