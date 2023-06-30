@@ -70,7 +70,7 @@
             var scene = new BABYLON.Scene(engine);
 
             // Environment
-            var hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("/textures/environment.dds", scene);
+            var hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("textures/environment.dds", scene);
             hdrTexture.name = "envTex";
             hdrTexture.gammaSpace = false;
             scene.environmentTexture = hdrTexture;
